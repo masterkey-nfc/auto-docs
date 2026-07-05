@@ -121,6 +121,10 @@ body{
 
 .footer-note{text-align:center;font-size:11px;color:var(--muted);margin-top:28px;padding-bottom:34px;line-height:1.7;}
 .footer-note .fk{font-family:'Fraunces',serif;font-weight:600;letter-spacing:.02em;background:linear-gradient(95deg, var(--gold-3), var(--gold-1));-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+.doc-link .meta .sub.exp-ok .dot{background:var(--emerald);box-shadow:0 0 5px var(--emerald);}
+.doc-link .meta .sub.exp-warn{color:#e0745f;}
+.doc-link .meta .sub.exp-warn .dot{background:#e0745f;box-shadow:0 0 5px #e0745f;}
 </style>
 </head>
 <body>
@@ -178,32 +182,60 @@ body{
 
     <a class="doc-link" href="https://masterkey-nfc.github.io/auto-docs/barrientos/permiso.jpeg" target="_blank" rel="noopener">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
-      <span class="meta"><p class="title">Permiso de circulación</p><p class="sub"><span class="dot"></span>Verificar vigencia</p></span>
+      <span class="meta"><p class="title">Permiso de circulación</p><p class="sub" id="exp-sub-permiso" data-expiry=""><span class="dot"></span>Verificar vigencia</p></span>
       <span class="go">→</span>
     </a>
     <a class="doc-link" href="https://masterkey-nfc.github.io/auto-docs/barrientos/soap.jpeg" target="_blank" rel="noopener">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L20 5V11C20 16 16.5 19.5 12 21.5C7.5 19.5 4 16 4 11V5L12 2Z"/></svg></span>
-      <span class="meta"><p class="title">SOAP / seguro</p><p class="sub"><span class="dot"></span>Verificar vigencia</p></span>
+      <span class="meta"><p class="title">SOAP / seguro</p><p class="sub" id="exp-sub-soap" data-expiry="2027-03-31"><span class="dot"></span>Verificar vigencia</p></span>
       <span class="go">→</span>
     </a>
     <a class="doc-link" href="https://masterkey-nfc.github.io/auto-docs/barrientos/tecnica.jpeg" target="_blank" rel="noopener">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
-      <span class="meta"><p class="title">Verificación técnica</p><p class="sub"><span class="dot"></span>Verificar vigencia</p></span>
+      <span class="meta"><p class="title">Verificación técnica</p><p class="sub" id="exp-sub-tecnica" data-expiry=""><span class="dot"></span>Verificar vigencia</p></span>
       <span class="go">→</span>
     </a>
     <a class="doc-link" href="https://masterkey-nfc.github.io/auto-docs/barrientos/licenciaDorso.jpeg" target="_blank" rel="noopener">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h4M14 14h2"/></svg></span>
-      <span class="meta"><p class="title">Licencia de conducir</p><p class="sub"><span class="dot"></span>Ver dorso</p></span>
+      <span class="meta"><p class="title">Licencia de conducir</p><p class="sub" id="exp-sub-licenciaFrente" data-expiry=""><span class="dot"></span>Ver frente</p></span>
       <span class="go">→</span>
     </a>
     <a class="doc-link" href="https://masterkey-nfc.github.io/auto-docs/barrientos/licenciaFrente.jpeg" target="_blank" rel="noopener">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h4M14 14h2"/></svg></span>
-      <span class="meta"><p class="title">Licencia de conducir</p><p class="sub"><span class="dot"></span>Ver frente</p></span>
+      <span class="meta"><p class="title">Licencia de conducir</p><p class="sub" id="exp-sub-licenciaDorso" data-expiry=""><span class="dot"></span>Ver dorso</p></span>
       <span class="go">→</span>
     </a>
 
     <p class="footer-note">Documentos verificables directamente con cada institución emisora.<br>Acreditado por <span class="fk">Master Key</span></p>
   </div>
 </div>
+<script>
+// Umbral de alerta: cuántos días antes del vencimiento se muestra en rojo.
+var WARN_DAYS = 30;
+document.querySelectorAll('[data-expiry]').forEach(function(el){
+  var val = el.getAttribute('data-expiry');
+  if(!val) return;
+  var dot = el.querySelector('.dot');
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var expiry = new Date(val + 'T00:00:00');
+  var diffDays = Math.round((expiry - today) / 86400000);
+  var text;
+  if(diffDays < 0){
+    text = 'Vencido hace ' + Math.abs(diffDays) + (Math.abs(diffDays) === 1 ? ' día' : ' días');
+    el.classList.add('exp-warn');
+  } else if(diffDays === 0){
+    text = 'Vence hoy';
+    el.classList.add('exp-warn');
+  } else if(diffDays <= WARN_DAYS){
+    text = 'Vence en ' + diffDays + (diffDays === 1 ? ' día' : ' días');
+    el.classList.add('exp-warn');
+  } else {
+    text = 'Vence en ' + diffDays + ' días';
+    el.classList.add('exp-ok');
+  }
+  el.innerHTML = '<span class="dot"></span>' + text;
+});
+</script>
 </body>
 </html>
