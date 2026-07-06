@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Aceptar consentimiento — Master Key</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0b0f; --panel:#15151c; --panel-2:#1b1b24; --border:#2a2a35;
+    --text:#f2f2f5; --text-secondary:#c7c7d1; --text-muted:#8a8a97;
+    --accent:#d9b97a; --success:#3ec98a; --danger:#e0574a;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding:20px 16px 40px;}
+  .wrap{max-width:560px;margin:0 auto;}
+  h1{font-size:19px;margin:0 0 4px;}
+  p.sub{color:var(--text-muted);font-size:13px;margin:0 0 20px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;}
+  .consent-text{font-size:13.5px;line-height:1.6;color:var(--text-secondary);}
+  .consent-text p{margin:0 0 12px;}
+  .consent-text p:last-child{margin-bottom:0;}
+  .consent-text strong{color:var(--text);}
+  button{width:100%;font-family:inherit;font-size:16px;border-radius:10px;padding:16px;border:1px solid var(--accent);background:var(--accent);color:#1a1400;cursor:pointer;font-weight:700;}
+  button:disabled{opacity:.5;}
+  .status{font-size:13px;margin-top:14px;padding:10px 12px;border-radius:8px;display:none;text-align:center;}
+  .status.show{display:block;}
+  .status.ok{background:#173b30;color:var(--success);}
+  .status.err{background:#3a1414;color:var(--danger);}
+  .missing{padding:30px 18px;text-align:center;color:var(--text-muted);font-size:14px;}
+  .accepted-box{text-align:center;padding:20px;}
+  .accepted-box .check{font-size:40px;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Consentimiento para el Tratamiento de Datos Personales</h1>
+  <p class="sub">Master Key</p>
+  <div id="content"></div>
+</div>
+
+<script>
+function getParam(k){
+  return new URLSearchParams(window.location.search).get(k);
+}
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+const name = getParam('nombre') || '';
+const plate = getParam('patente') || '';
+const contentEl = document.getElementById('content');
+
+if(!name || !plate){
+  contentEl.innerHTML = '<div class="card"><p class="missing">Este link no incluye los datos del cliente. Pídele a Master Key que te envíe el link correcto.</p></div>';
+} else {
+  const dateStr = new Date().toLocaleDateString('es-CL');
+
+  function getConsentParagraphs(){
+    return [
+      { text: 'Responsable del tratamiento: Master Key', bold: true },
+      { text: 'Contacto para ejercer sus derechos (acceso, rectificación o eliminación de sus datos): MASTERKEY.NFC@ATOMICMAIL.IO' },
+      { text: `Yo, ${name}, titular del vehículo patente ${plate}, declaro que:` },
+      { text: '1. Declaro ser el titular de los documentos y datos personales entregados, o contar con autorización expresa de su titular para actuar en su representación.' },
+      { text: '2. Autorizo a Master Key a recopilar, almacenar y publicar los siguientes documentos: Permiso de Circulación, SOAP, Verificación Técnica y Licencia de Conducir, con el único fin de habilitar su verificación mediante tecnología NFC.' },
+      { text: '3. Entiendo y acepto que estos documentos quedarán publicados en un enlace de internet de acceso público, alojado en un servicio de terceros (GitHub Pages), y que cualquier persona que cuente con dicho enlace podrá visualizarlos, sin necesidad de contraseña ni autenticación.' },
+      { text: '4. Entiendo que puedo solicitar en cualquier momento el acceso, la rectificación o la eliminación de mis datos personales escribiendo a MASTERKEY.NFC@ATOMICMAIL.IO, conforme a la normativa vigente de protección de datos personales en Chile (actualmente la Ley N° 19.628, y su marco sucesor la Ley N° 21.719, a partir de su entrada en vigencia).' },
+      { text: '5. Otorgo este consentimiento de manera libre, informada y expresa, al presionar el botón "Acepto" a continuación.' },
+      { text: `Fecha: ${dateStr}` }
+    ];
+  }
+
+  contentEl.innerHTML = `
+    <div class="card">
+      <div class="consent-text">
+        ${getConsentParagraphs().map(p => `<p>${p.bold ? '<strong>'+escapeHtml(p.text)+'</strong>' : escapeHtml(p.text)}</p>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <button type="button" id="acceptBtn">Acepto los Términos y Condiciones</button>
+      <div class="status" id="statusLine"></div>
+    </div>
+  `;
+
+  document.getElementById('acceptBtn').onclick = function(){
+    const btn = document.getElementById('acceptBtn');
+    const statusEl = document.getElementById('statusLine');
+    btn.disabled = true;
+    statusEl.textContent = 'Generando PDF…';
+    statusEl.className = 'status show';
+
+    try{
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('es-CL');
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+      const marginLeft = 56, marginRight = 56;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const maxWidth = pageWidth - marginLeft - marginRight;
+      let y = 70;
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(15);
+      doc.text(doc.splitTextToSize('Consentimiento para el Tratamiento de Datos Personales', maxWidth), marginLeft, y);
+      y += 36;
+
+      function addParagraph(text, opts){
+        opts = opts || {};
+        doc.setFont('helvetica', opts.bold ? 'bold' : 'normal');
+        doc.setFontSize(11);
+        const lines = doc.splitTextToSize(text, maxWidth);
+        doc.text(lines, marginLeft, y);
+        y += lines.length * 15 + 10;
+      }
+      getConsentParagraphs().forEach(function(p){ addParagraph(p.text, { bold: p.bold }); });
+
+      y += 24;
+      doc.setDrawColor(180,180,180);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 24;
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(12);
+      doc.text('✓ ACEPTADO', marginLeft, y);
+      y += 20;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      doc.text(name + ' — Patente ' + plate, marginLeft, y);
+      y += 16;
+      doc.setFontSize(9);
+      doc.setTextColor(130,130,130);
+      doc.text('Aceptado electrónicamente el ' + dateStr + ' a las ' + timeStr + '.', marginLeft, y);
+
+      function slugify(str){
+        return String(str).toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+          .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || 'cliente';
+      }
+      doc.save('consentimiento-aceptado-' + slugify(plate) + '.pdf');
+
+      statusEl.textContent = 'Listo ✓ Reenvíe el PDF descargado por WhatsApp.';
+      statusEl.className = 'status show ok';
+
+      contentEl.querySelector('.card:last-child').innerHTML = `
+        <div class="accepted-box">
+          <div class="check">✓</div>
+          <p>Consentimiento aceptado. Reenvíe el PDF que se descargó a Master Key por WhatsApp.</p>
+        </div>
+      `;
+    } catch(err){
+      statusEl.textContent = 'Error al generar el PDF: ' + err.message;
+      statusEl.className = 'status show err';
+      btn.disabled = false;
+      console.error(err);
+    }
+  };
+}
+</script>
+</body>
+</html>
