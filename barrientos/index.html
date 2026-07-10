@@ -126,8 +126,13 @@ body{
 .doc-link .meta .sub.exp-warn{color:#e0745f;}
 .doc-link .meta .sub.exp-warn .dot{background:#e0745f;box-shadow:0 0 5px #e0745f;}
 
-.unsub-link{display:block;text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;text-decoration:underline;text-underline-offset:3px;}
-.unsub-link:hover{color:var(--gold-2);}
+.doc-link.action-link{border-color:rgba(94,150,214,0.3);margin-top:22px;}
+.doc-link.action-link:first-of-type{margin-top:22px;}
+.doc-link.action-link::before{background:linear-gradient(180deg, #8fc0f0, #4a76b8);}
+.doc-link.action-link:hover,.doc-link.action-link:active{border-color:#6ea3dd;background:var(--panel-2);}
+.doc-link.action-link .icon{border-color:rgba(94,150,214,0.4);}
+.doc-link.action-link .icon svg{stroke:#7fb0e8;}
+.doc-link.action-link .go{color:#7fb0e8;}
 </style>
 </head>
 <body>
@@ -211,8 +216,16 @@ body{
     </a>
   
 
-    <a class="unsub-link" href="https://wa.me/56954650835?text=Hola%2C%20soy%20ANYELO%20BARRIENTOS%2C%20patente%20GYCD34.%20Quiero%20actualizar%20o%20agregar%20un%20documento%20(indicar%20cu%C3%A1l%3A%20permiso%2C%20SOAP%2C%20verificaci%C3%B3n%20t%C3%A9cnica%20o%20licencia)." target="_blank" rel="noopener">Solicitar actualización de un documento</a>
-    <a class="unsub-link" href="https://wa.me/56954650835?text=Hola%2C%20soy%20ANYELO%20BARRIENTOS%2C%20patente%20GYCD34.%20Solicito%20que%20borren%20mis%20datos%20personales%20del%20sistema." target="_blank" rel="noopener">Solicitar eliminación de mis datos</a>
+    <a class="doc-link action-link" href="https://wa.me/56954650835?text=Hola%2C%20soy%20ANYELO%20BARRIENTOS%2C%20patente%20GYCD34.%20Quiero%20actualizar%20o%20agregar%20un%20documento%20(indicar%20cu%C3%A1l%3A%20permiso%2C%20SOAP%2C%20verificaci%C3%B3n%20t%C3%A9cnica%20o%20licencia)." target="_blank" rel="noopener">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></span>
+      <span class="meta"><p class="title">Actualizar un documento</p><p class="sub"><span class="dot"></span>Ej: seguro mensual, licencia, etc.</p></span>
+      <span class="go">→</span>
+    </a>
+    <a class="doc-link action-link" href="https://wa.me/56954650835?text=Hola%2C%20soy%20ANYELO%20BARRIENTOS%2C%20patente%20GYCD34.%20Solicito%20que%20borren%20mis%20datos%20personales%20del%20sistema." target="_blank" rel="noopener">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span>
+      <span class="meta"><p class="title">Eliminar mis datos</p><p class="sub"><span class="dot"></span>Solicitud de baja</p></span>
+      <span class="go">→</span>
+    </a>
 
     <p class="footer-note">Documentos verificables directamente con cada institución emisora.<br>Acreditado por <span class="fk">Master Key</span></p>
   </div>
